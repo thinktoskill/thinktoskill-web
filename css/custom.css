@@ -1,0 +1,352 @@
+/* Custom modern CSS styles for ThinkToSkill Virtual Academy */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-navy: #0b1528;
+  --brand-blue: #2563eb;
+  --brand-cyan: #06b6d4;
+  --accent-orange: #f97316;
+  --whatsapp-green: #25d366;
+  --card-bg: #ffffff;
+  --surface-light: #f8fafc;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Gradient accents */
+.gradient-text-blue {
+  background: linear-gradient(135deg, #1d4ed8 0%, #0284c7 50%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-orange {
+  background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-hero-bg {
+  background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.08) 0%, rgba(248, 250, 252, 1) 70%),
+              radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.08) 0%, rgba(248, 250, 252, 1) 70%);
+}
+
+.dark-hero-mesh {
+  background-color: #0b1329;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.3) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.25) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(30, 58, 138, 0.4) 0px, transparent 50%);
+}
+
+/* Glowing dot for live batches */
+.pulse-live {
+  position: relative;
+}
+
+.pulse-live::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  animation: pulse-ring 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+/* WhatsApp floating pulse */
+.whatsapp-float-btn {
+  animation: whatsapp-glow 2.5s infinite;
+}
+
+@keyframes whatsapp-glow {
+  0%, 100% {
+    box-shadow: 0 4px 14px 0 rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 24px 6px rgba(37, 211, 102, 0.7);
+  }
+}
+
+/* Subtle glassmorphism */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.dark-glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Partner logo ticker styling */
+.logo-ticker {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: 2rem;
+}
+
+.logo-ticker-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
+  min-width: 100%;
+  animation: scroll-marquee 28s linear infinite;
+}
+
+.logo-ticker:hover .logo-ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Toast alert styling */
+#toast-container {
+  position: fixed;
+  bottom: 84px;
+  right: 16px;
+  left: 16px;
+  max-width: calc(100% - 32px);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  #toast-container {
+    bottom: 24px;
+    right: 24px;
+    left: auto;
+    max-width: 420px;
+  }
+}
+
+.toast {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Autocomplete Search Dropdown */
+.search-results-dropdown {
+  max-height: 340px;
+  overflow-y: auto;
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   Mobile & Tablet Responsiveness Enhancements (ThinkToSkill Virtual Academy)
+   ========================================================================== */
+
+/* 1. Touch & Tap Ergonomics */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 2. Momentum Scrolling for Mobile & Tablet */
+.overflow-x-auto, .overflow-y-auto, [class*="overflow-"] {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 3. Prevent iOS Safari auto-zoom on form controls (< 16px causes auto-zoom on focus) */
+@media screen and (max-width: 640px) {
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* 4. Safe Area Insets for Modern Mobile Devices (iPhone notch & home indicator) */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .whatsapp-float-btn {
+    bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+  #floating-student-reg-btn {
+    bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 640px) {
+    .whatsapp-float-btn {
+      bottom: calc(24px + env(safe-area-inset-bottom));
+    }
+    #floating-student-reg-btn {
+      bottom: calc(24px + env(safe-area-inset-bottom));
+    }
+  }
+}
+
+/* 5. Mobile Table Swipe Indicator */
+.table-responsive-wrapper {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 6. Mobile Nav Transition */
+#mobile-menu {
+  transition: all 0.25s ease-in-out;
+}
+
+/* ==========================================================================
+   Header Navigation Active Tab Highlighting System
+   ========================================================================== */
+
+/* Desktop Navigation Link Base */
+.nav-tab-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569; /* slate-600 */
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.nav-tab-link:hover {
+  color: #2563eb; /* blue-600 */
+  background-color: #f8fafc; /* slate-50 */
+}
+
+/* Desktop Active Tab Pill */
+.nav-tab-link.active {
+  color: #1d4ed8 !important; /* blue-700 */
+  background-color: #eff6ff !important; /* blue-50 */
+  font-weight: 800 !important;
+  border-color: #bfdbfe !important; /* blue-200 */
+  box-shadow: 0 1px 3px 0 rgba(37, 99, 235, 0.1), 0 1px 2px -1px rgba(37, 99, 235, 0.06);
+}
+
+.nav-tab-link .active-dot {
+  display: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #2563eb;
+  box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+  animation: pulse-ring 2s infinite cubic-bezier(0.66, 0, 0, 1);
+  flex-shrink: 0;
+}
+
+.nav-tab-link.active .active-dot {
+  display: inline-block !important;
+}
+
+/* Mobile Drawer Nav Tab Link */
+.mobile-nav-tab-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155; /* slate-700 */
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+  text-decoration: none;
+}
+
+.mobile-nav-tab-link:hover {
+  background-color: #f1f5f9;
+  color: #2563eb;
+}
+
+/* Mobile Active Tab State */
+.mobile-nav-tab-link.active {
+  background-color: #eff6ff !important;
+  color: #1d4ed8 !important;
+  font-weight: 800 !important;
+  border-left-color: #2563eb !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.mobile-nav-tab-link .mobile-active-pill {
+  display: none;
+}
+
+.mobile-nav-tab-link.active .mobile-active-pill {
+  display: inline-flex !important;
+}
+
+
+
