@@ -84,6 +84,29 @@ async function deliverLeadToBackend(leadData) {
       _template: 'table'
     };
 
+    // Auto-forward lead to ThinkToSkill CandidateCRM Webhook API (localhost:8080)
+    try {
+      fetch('http://localhost:8080/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: leadData.name,
+          phone: leadData.phone,
+          email: leadData.email || '',
+          course: leadData.courseTitle || leadData.courseName,
+          city: leadData.city || 'India',
+          message: `Batch: ${leadData.batchSchedule || 'Weekday Evening'} | Qual: ${leadData.qualification || 'Graduate'}${leadData.message ? ' | Note: ' + leadData.message : ''}`,
+          source: 'ThinkToSkill Website Form'
+        })
+      }).then(r => r.json()).then(res => {
+        console.log('[CRM SYNC] Lead logged in ThinkToSkill CRM:', res);
+      }).catch(() => {
+        // CRM server may be offline, fails gracefully
+      });
+    } catch (crmErr) {
+      // safe fallback
+    }
+
     const response = await fetch('https://formsubmit.co/ajax/thinktoskill@gmail.com', {
       method: 'POST',
       headers: {
