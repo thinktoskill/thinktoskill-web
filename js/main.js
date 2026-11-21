@@ -305,6 +305,135 @@ function initCourseSearch() {
   });
 }
 
+// Smart course matching helper
+function courseMatchesQuery(course, query) {
+  if (!query) return true;
+  const qLower = query.toLowerCase().trim();
+  if (!qLower) return true;
+
+  const title = (course.title || '').toLowerCase();
+  const desc = (course.shortDesc || '').toLowerCase();
+  const overview = (course.overview || '').toLowerCase();
+  const category = (course.category || '').toLowerCase();
+  const id = (course.id || '').toLowerCase();
+
+  // 1. Direct match in Title, Description, or Overview
+  if (title.includes(qLower) || desc.includes(qLower) || overview.includes(qLower)) {
+    return true;
+  }
+
+  // 2. Specific Domain/Skill Normalization Rules
+  if (qLower.includes('sap')) {
+    if (qLower.includes('finance') || qLower.includes('fico') || qLower.includes('fi/co')) {
+      return id === 'sap-s4-hana-finance' || id === 'sap-s4-hana-integrated';
+    }
+    if (qLower.includes('material') || qLower.includes('mm') || qLower.includes('procurement')) {
+      return id === 'sap-s4-hana-mm' || id === 'sap-s4-hana-integrated';
+    }
+    return category === 'sap-erp' || id.startsWith('sap-');
+  }
+
+  if (qLower.includes('power bi') || qLower.includes('tableau')) {
+    return id === 'data-analytics-bi' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('excel')) {
+    return id === 'data-analytics-bi' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('docker') || qLower.includes('kubernetes')) {
+    return id === 'cloud-devops-aws' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('linux')) {
+    return id === 'cloud-devops-aws' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('devops')) {
+    return id === 'cloud-devops-aws' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('cloud')) {
+    return id === 'cloud-devops-aws' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('deep learning')) {
+    return id === 'ai-deep-learning' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('artificial intelligence') || qLower === 'ai') {
+    return id === 'ai-deep-learning' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('machine learning') || qLower === 'ml') {
+    return id === 'data-science-ml' || id === 'ai-deep-learning' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('data science')) {
+    return id === 'data-science-ml' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('data analytics') || qLower.includes('business intelligence')) {
+    return id === 'data-analytics-bi' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('python')) {
+    return id === 'python-sql-foundations' || id === 'data-analytics-bi' || id === 'data-science-ml' || id === 'ai-deep-learning' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('sql') || qLower.includes('database')) {
+    return id === 'python-sql-foundations' || id === 'data-analytics-bi' || id === 'data-science-ml' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('aws')) {
+    return id === 'cloud-devops-aws' || id === 'ai-deep-learning' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('git')) {
+    return course.tools && course.tools.some(t => t.toLowerCase().includes('git'));
+  }
+
+  if (qLower.includes('jupyter')) {
+    return id === 'python-sql-foundations' || id === 'data-science-ml' || id === 'ai-deep-learning' || id === 'complete-ai-cloud-diploma';
+  }
+
+  if (qLower.includes('vs code')) {
+    return course.tools && course.tools.some(t => t.toLowerCase().includes('vs code'));
+  }
+
+  // 3. Bidirectional Tools & Roles Match
+  if (course.tools && course.tools.some(t => {
+    const tL = t.toLowerCase();
+    return tL.includes(qLower) || qLower.includes(tL);
+  })) {
+    return true;
+  }
+
+  if (course.careerRoles && course.careerRoles.some(r => {
+    const rL = r.toLowerCase();
+    return rL.includes(qLower) || qLower.includes(rL);
+  })) {
+    return true;
+  }
+
+  // 4. Token-level matching (split by spaces, slashes, parens)
+  const tokens = qLower.split(/[\s/(),&+-]+/).filter(w => w.length > 2);
+  if (tokens.length > 0) {
+    const allText = [
+      title,
+      desc,
+      overview,
+      ...(course.tools || []).map(t => t.toLowerCase()),
+      ...(course.careerRoles || []).map(r => r.toLowerCase())
+    ].join(' ');
+    if (tokens.some(tok => allText.includes(tok))) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function filterAndRender(category, query) {
   let filtered = COURSES_DATA;
 
@@ -312,14 +441,8 @@ function filterAndRender(category, query) {
     filtered = filtered.filter(c => c.category === category);
   }
 
-  if (query) {
-    filtered = filtered.filter(c => {
-      const matchTitle = c.title.toLowerCase().includes(query);
-      const matchDesc = c.shortDesc.toLowerCase().includes(query);
-      const matchTools = c.tools.some(t => t.toLowerCase().includes(query));
-      const matchRoles = c.careerRoles.some(r => r.toLowerCase().includes(query));
-      return matchTitle || matchDesc || matchTools || matchRoles;
-    });
+  if (query && query.trim()) {
+    filtered = filtered.filter(c => courseMatchesQuery(c, query));
   }
 
   renderCourseCards(filtered);
@@ -369,16 +492,34 @@ function initSkillsMatrix() {
 }
 
 function filterBySkill(skillName) {
+  // 1. Reset category buttons to "All Tracks"
+  const filterBtns = document.querySelectorAll('.category-filter-btn');
+  filterBtns.forEach(b => {
+    if (b.getAttribute('data-category') === 'all') {
+      b.classList.remove('bg-white', 'text-slate-700', 'hover:bg-slate-100');
+      b.classList.add('bg-blue-600', 'text-white', 'shadow-md');
+    } else {
+      b.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
+      b.classList.add('bg-white', 'text-slate-700', 'hover:bg-slate-100');
+    }
+  });
+
+  // 2. Set search input value
   const searchInput = document.getElementById('course-search');
   if (searchInput) {
     searchInput.value = skillName;
-    searchInput.dispatchEvent(new Event('input'));
   }
-  const courseSection = document.getElementById('courses-section');
-  if (courseSection) {
-    courseSection.scrollIntoView({ behavior: 'smooth' });
+
+  // 3. Filter and render matching courses
+  filterAndRender('all', skillName);
+
+  // 4. Scroll smoothly to the courses catalog section
+  const target = document.getElementById('courses-section') || document.getElementById('courses-grid');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  showToast(`Filtering courses for "${skillName}"...`, 'info');
+
+  showToast(`Showing courses covering "${skillName}"`, 'info');
 }
 
 // 3. Course Details & Syllabus Modal
