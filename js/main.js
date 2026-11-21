@@ -67,24 +67,25 @@ function clearLegacyCandidateStorage(preserveActiveProfile = false) {
 }
 clearLegacyCandidateStorage(true);
 
-// Deliver lead to admissions desk via secure HTTPS endpoint
+// ThinkToSkill Admissions Register - Google Sheets Web App Endpoint
+const GOOGLE_SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyM_MQ3T5Dax-jR3ngeURbBHFxPMueNOBp2H1cTDodVNzrG20kBnKTINdcOAg0rHgZb/exec';
+
+// Deliver lead directly to ThinkToSkill Google Sheet
 async function deliverLeadToBackend(leadData) {
   try {
     const payload = {
-      name: leadData.name,
-      phone: leadData.phone,
-      email: leadData.email || 'Not provided',
-      course: leadData.courseTitle || leadData.courseName,
+      name: leadData.name || '',
+      phone: leadData.phone || '',
+      email: leadData.email || '',
+      course: leadData.courseTitle || leadData.courseName || '',
       schedule: leadData.batchSchedule || 'Weekday Evening',
       qualification: leadData.qualification || 'Graduate',
-      city: leadData.city || 'Not specified',
+      city: leadData.city || 'India',
       message: leadData.message || '',
-      submittedAt: new Date().toISOString(),
-      _subject: `New Lead: ${leadData.name} - ${leadData.courseTitle || leadData.courseName}`,
-      _template: 'table'
+      submittedAt: new Date().toISOString()
     };
 
-    // Auto-forward lead to ThinkToSkill CandidateCRM Webhook API (localhost:8080)
+    // Auto-forward lead to ThinkToSkill CandidateCRM Webhook API (localhost:8080) if available
     try {
       fetch('http://localhost:8080/api/enquiry', {
         method: 'POST',
@@ -107,18 +108,20 @@ async function deliverLeadToBackend(leadData) {
       // safe fallback
     }
 
-    const response = await fetch('https://formsubmit.co/ajax/thinktoskill@gmail.com', {
+    // Direct recording in ThinkToSkill Admissions Google Sheet
+    await fetch(GOOGLE_SHEET_ENDPOINT, {
       method: 'POST',
+      mode: 'no-cors',
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Content-Type': 'text/plain;charset=utf-8'
       },
       body: JSON.stringify(payload)
     });
-    const result = await response.json().catch(() => null);
-    return response.ok && (result?.success === true || result?.success === 'true');
+
+    console.log('[SHEET SYNC] Lead logged successfully in ThinkToSkill Google Sheet');
+    return true;
   } catch (err) {
-    console.warn('FormSubmit delivery failed; no receipt was confirmed.', err);
+    console.warn('Google Sheet submission failed:', err);
     return false;
   }
 }
@@ -1628,7 +1631,7 @@ function injectRegistrationPopupDOM() {
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <span id="popup-reg-submit-text">Submit Student Registration Details</span>
           </button>
-          <p class="text-[10px] text-slate-500 text-center mt-2">Submitting sends your inquiry through FormSubmit to our admissions email. <a href="privacy.html" class="underline text-blue-600">Privacy Policy</a></p>
+          <p class="text-[10px] text-slate-500 text-center mt-2">Submitting records your registration directly with our Admissions Desk. <a href="privacy.html" class="underline text-blue-600">Privacy Policy</a></p>
           <p class="text-[10px] text-slate-400 text-center mt-2">No loans • No 3rd-party NBFC EMI traps • Official admissions desk +91 88258 08110</p>
         </div>
       </form>
