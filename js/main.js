@@ -224,25 +224,24 @@ function renderCourseCards(coursesToRender = COURSES_DATA) {
             ${course.tools.length > 5 ? `<span class="px-2 py-0.5 text-xs text-slate-500 font-medium">+${course.tools.length - 5} more</span>` : ''}
           </div>
 
-          <!-- Fee and CTC Section -->
+          <!-- Admission & Batch Status Section -->
           <div class="mt-5 pt-4 border-t border-slate-100 flex items-end justify-between">
             <div>
               <div class="flex items-center gap-1.5 mb-0.5">
-                <span class="text-xs text-slate-500 font-medium">Course Fee</span>
-                <span class="text-[9px] font-extrabold text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded border border-amber-200 uppercase tracking-tight">+ 18% GST Applicable</span>
+                <span class="text-xs text-slate-500 font-medium">Admissions</span>
+                <span class="text-[9px] font-extrabold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-200 uppercase tracking-tight">New Batch Open</span>
               </div>
-              <div class="flex items-baseline gap-2">
-                <span class="text-2xl font-extrabold text-slate-900">₹${course.discountedFee.toLocaleString('en-IN')}</span>
-                <span class="text-xs text-slate-400 line-through">₹${course.originalFee.toLocaleString('en-IN')}</span>
+              <div class="text-sm font-black text-slate-900">
+                100% Live Interactive Batches
               </div>
               <div class="text-[11px] text-emerald-600 font-semibold mt-0.5">
                 ✓ Live Training + Cloud Lab Access
               </div>
             </div>
             <div class="text-right">
-              <div class="text-[11px] text-slate-500 font-medium">Payment Option</div>
+              <div class="text-[11px] text-slate-500 font-medium">Placement Support</div>
               <div class="text-xs font-extrabold text-blue-700 bg-blue-50 px-2.5 py-1.5 rounded-lg border border-blue-100">
-                2 Easy Milestones
+                100% Dedicated Drives
               </div>
             </div>
           </div>
@@ -575,14 +574,14 @@ function openCourseDetails(courseId) {
           <span class="font-bold text-white">${course.duration}</span>
         </div>
         <div>
-          <span class="text-slate-400 block">Course Fee (₹)</span>
-          <span class="font-bold text-emerald-400 text-base">₹${course.discountedFee.toLocaleString('en-IN')}</span>
-          <span class="text-[10px] text-amber-300 font-bold block mt-0.5">+ 18% GST Applicable</span>
+          <span class="text-slate-400 block">Placement Support</span>
+          <span class="font-bold text-emerald-400 text-sm">100% Dedicated</span>
+          <span class="text-[10px] text-emerald-300 font-bold block mt-0.5">350+ Hiring Partners</span>
         </div>
         <div>
-          <span class="text-slate-400 block">Payment Plan</span>
-          <span class="font-bold text-blue-400 text-sm">2 Easy Milestones</span>
-          <span class="text-[10px] text-slate-300 block mt-0.5">Pay in 2 Equal Parts</span>
+          <span class="text-slate-400 block">Admission Status</span>
+          <span class="font-bold text-blue-400 text-sm">New Batches Open</span>
+          <span class="text-[10px] text-slate-300 block mt-0.5">Weekday & Weekend</span>
         </div>
       </div>
     </div>
@@ -688,7 +687,7 @@ function initAdmissionForm() {
     COURSES_DATA.forEach(c => {
       const opt = document.createElement('option');
       opt.value = c.id;
-      opt.textContent = `${c.title} (₹${c.discountedFee.toLocaleString('en-IN')} + 18% GST)`;
+      opt.textContent = `${c.title} (${c.duration})`;
       courseSelect.appendChild(opt);
     });
   }
@@ -1119,9 +1118,8 @@ function initHeroSearchAutocomplete() {
               <div class="text-[11px] text-slate-500 mt-0.5">Tools: ${c.tools.slice(0, 4).join(', ')}</div>
             </div>
             <div class="text-right">
-              <div class="text-xs font-black text-slate-900">₹${c.discountedFee.toLocaleString('en-IN')}</div>
-              <div class="text-[9px] text-amber-700 font-semibold">+ 18% GST</div>
-              <span class="text-[10px] font-bold text-blue-600 flex items-center justify-end gap-0.5 mt-0.5">
+              <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">Admissions Open</span>
+              <span class="text-[10px] font-bold text-blue-600 flex items-center justify-end gap-0.5 mt-1">
                 View →
               </span>
             </div>
@@ -1221,7 +1219,7 @@ function initFreeAddonBenefits() {
           <span class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase tracking-wider">
             ${b.tag}
           </span>
-          <span class="text-xs font-bold text-slate-400 line-through">${b.value}</span>
+          <span class="text-xs font-bold text-emerald-700">${b.value}</span>
         </div>
         <h4 class="text-base font-extrabold text-slate-900 mb-2">${b.title}</h4>
         <p class="text-xs text-slate-600 leading-relaxed">${b.desc}</p>
@@ -1322,7 +1320,7 @@ function openSyllabusModal(courseId) {
 
       <div class="bg-blue-50/70 p-3.5 rounded-2xl border border-blue-100 text-xs mb-4 space-y-1.5">
         <div class="flex justify-between font-semibold"><span class="text-slate-600">Training Duration:</span> <span class="text-blue-800">${course.duration}</span></div>
-        <div class="flex justify-between font-semibold"><span class="text-slate-600">Tuition Fee:</span> <span class="text-slate-900">₹${course.discountedFee.toLocaleString('en-IN')} (+ 18% GST Applicable)</span></div>
+        <div class="flex justify-between font-semibold"><span class="text-slate-600">Admission Status:</span> <span class="text-emerald-700 font-bold">New Batch Open (Flexible Milestones)</span></div>
         ${course.projects && course.projects.length > 0 ? `<div class="flex justify-between font-semibold"><span class="text-slate-600">Hands-on Projects:</span> <span class="text-emerald-700">${course.projects.length} Real-World Capstones</span></div>` : '<div class="flex justify-between font-semibold"><span class="text-slate-600">Lab & Server Access:</span> <span class="text-emerald-700">24/7 Live GUI & Fiori Cloud Server</span></div>'}
         <div class="flex justify-between font-semibold"><span class="text-slate-600">Tools Covered:</span> <span class="text-slate-800">${course.tools.slice(0, 4).join(', ')}</span></div>
       </div>
@@ -1560,7 +1558,7 @@ function executeWhatsAppShare(type, courseTitle, candidate, imgSrc = null) {
 
   let message = '';
   if (type === 'brochure') {
-    message = `Hi ThinkToSkill Admissions Team,\nMy name is ${name} (Registered Candidate).\nWhatsApp Mobile: ${formattedPhone}${city}${qual}${batch}\nI am requesting the official high-resolution brochure flyer and fee details for: *${courseTitle}*.\nPlease share the official brochure and upcoming batch schedule.`;
+    message = `Hi ThinkToSkill Admissions Team,\nMy name is ${name} (Registered Candidate).\nWhatsApp Mobile: ${formattedPhone}${city}${qual}${batch}\nI am requesting the official high-resolution brochure flyer and enrollment details for: *${courseTitle}*.\nPlease share the official brochure and upcoming batch schedule.`;
   } else {
     message = `Hi ThinkToSkill Admissions Team,\nMy name is ${name} (Registered Candidate).\nWhatsApp Mobile: ${formattedPhone}${city}${qual}${batch}\nI am requesting the complete week-by-week syllabus curriculum guide for: *${courseTitle}*.\nPlease share the complete syllabus breakdown and next batch details.`;
   }
@@ -1592,7 +1590,7 @@ function triggerSyllabusFileDownload(courseId) {
     ? `\n\nREAL-WORLD INDUSTRY CAPSTONES:\n${course.projects.map(p => `- ${p}`).join('\n')}` 
     : '';
 
-  const syllabusContent = `ThinkToSkill Virtual Academy - Official Curriculum Syllabus\n=========================================================\nProgram: ${course.title}\nDuration: ${course.duration}\nTraining Mode: 100% Live Interactive Virtual (Pan-India)\nFee: ₹${course.discountedFee.toLocaleString('en-IN')} + 18% GST Applicable (Direct Milestone Pay: 2 parts available)\n\nKEY TECHNOLOGIES & TOOLS COVERED:\n${course.tools.join(', ')}\n\nWEEK-BY-WEEK CURRICULUM MODULES:\n${course.curriculum.map(m => `\n- ${m.module} (${m.duration}):\n  * ${m.topics.join('\n  * ')}`).join('\n')}${capstoneText}\n\nREPUTED HIRING PARTNERS & PLACEMENT NETWORK:\n${course.hirers.join(', ')}\n\nOfficial Admissions Helpline: +91 88258 08110 | WhatsApp Support: https://wa.me/918825808110\nThinkToSkill Virtual Academy - Premier Tech & ERP Training Academy`;
+  const syllabusContent = `ThinkToSkill Virtual Academy - Official Curriculum Syllabus\n=========================================================\nProgram: ${course.title}\nDuration: ${course.duration}\nTraining Mode: 100% Live Interactive Virtual (Pan-India)\nAdmissions: Enrollment Open (Live Virtual Batches • Dedicated Placement Support)\n\nKEY TECHNOLOGIES & TOOLS COVERED:\n${course.tools.join(', ')}\n\nWEEK-BY-WEEK CURRICULUM MODULES:\n${course.curriculum.map(m => `\n- ${m.module} (${m.duration}):\n  * ${m.topics.join('\n  * ')}`).join('\n')}${capstoneText}\n\nREPUTED HIRING PARTNERS & PLACEMENT NETWORK:\n${course.hirers.join(', ')}\n\nOfficial Admissions Helpline: +91 88258 08110 | WhatsApp Support: https://wa.me/918825808110\nThinkToSkill Virtual Academy - Premier Tech & ERP Training Academy`;
 
   const blob = new Blob([syllabusContent], { type: 'text/plain;charset=utf-8' });
   const downloadUrl = URL.createObjectURL(blob);
@@ -1674,7 +1672,7 @@ function injectRegistrationPopupDOM() {
         </div>
         <h3 id="popup-reg-title" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">Student Registration Details</h3>
         <p id="popup-reg-desc" class="text-xs text-slate-500 mt-1 leading-relaxed">
-          Register for upcoming live interactive batches with transparent milestone fees & 1-on-1 industry mentor guidance.
+          Register for upcoming live interactive batches with flexible milestone options & 1-on-1 industry mentor guidance.
         </p>
       </div>
 
@@ -1760,10 +1758,10 @@ function injectRegistrationPopupDOM() {
           <input type="text" id="popup-reg-city" required placeholder="e.g. Chennai, Bengaluru, Hyderabad, Pune, Delhi NCR..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 focus:bg-white" />
         </div>
 
-        <!-- Fee Guarantee Banner -->
-        <div class="p-3 bg-amber-50/80 rounded-xl border border-amber-200/80 text-[11px] text-amber-900 flex items-center justify-between gap-2">
-          <span class="font-bold">✓ Direct Milestone Payment Option (2 Parts)</span>
-          <span class="font-extrabold uppercase text-[10px] bg-amber-200/60 px-2 py-0.5 rounded border border-amber-300">+ 18% GST Applicable</span>
+        <!-- Admission Guarantee Banner -->
+        <div class="p-3 bg-blue-50/80 rounded-xl border border-blue-200/80 text-[11px] text-blue-900 flex items-center justify-between gap-2">
+          <span class="font-bold">✓ 100% Live Interactive Batches & Practical Labs</span>
+          <span class="font-extrabold uppercase text-[10px] bg-blue-200/60 px-2 py-0.5 rounded border border-blue-300">Dedicated Placement</span>
         </div>
 
         <!-- Submit Button -->
@@ -1879,7 +1877,7 @@ function openRegistrationModal(courseId = null, options = {}) {
   } else {
     if (badgeEl) badgeEl.innerHTML = '<span>🎓 ThinkToSkill Admissions 2026</span>';
     if (titleEl) titleEl.innerText = 'Student Registration Details';
-    if (descEl) descEl.innerText = 'Register for upcoming live interactive batches with transparent milestone fees & 1-on-1 industry mentor guidance.';
+    if (descEl) descEl.innerText = 'Register for upcoming live interactive batches with flexible milestone options & 1-on-1 industry mentor guidance.';
     if (submitBtnText) submitBtnText.innerText = 'Submit Student Registration Details';
     if (quickUnlockBox) quickUnlockBox.classList.remove('hidden');
   }
@@ -1905,7 +1903,7 @@ function openRegistrationModal(courseId = null, options = {}) {
   if (select && typeof COURSES_DATA !== 'undefined') {
     select.innerHTML = COURSES_DATA.map(c => `
       <option value="${c.id}" ${(courseId === c.id || (existing && existing.courseId === c.id)) ? 'selected' : ''}>
-        ${c.title} — ₹${c.discountedFee.toLocaleString('en-IN')} (+ 18% GST)
+        ${c.title} (${c.duration})
       </option>
     `).join('');
   }

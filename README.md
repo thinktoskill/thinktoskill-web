@@ -14,9 +14,9 @@ Built with **HTML5, Tailwind CSS, Modern JavaScript, and Google Fonts**, it requ
 
 2. **Core In-Demand Tech & Enterprise ERP Programs Covered**:
    - **Enterprise ERP Track (SAP S/4HANA)**:
-     - **SAP S/4HANA Finance (FI/CO)** (2 Months / ₹30,000): Universal Journal (ACDOCA), General Ledger, Accounts Payable, Accounts Receivable, New Asset Accounting, Controlling (CO), and SAP Fiori Launchpad.
-     - **SAP S/4HANA Materials Management (MM)** (2 Months / ₹30,000): Procure-to-Pay (P2P), Material Master, Purchasing, Inventory Management (MIGO), Logistics Invoice Verification (MIRO), and Automatic Account Determination (OBYC).
-     - **SAP S/4HANA Integrated ERP (Finance & MM)** (Dual Functional Specialization | 4 Months / ₹60,000): Comprehensive cross-functional dual specialization with live SAP server sandbox access.
+     - **SAP S/4HANA Finance (FI/CO)** (2 Months): Universal Journal (ACDOCA), General Ledger, Accounts Payable, Accounts Receivable, New Asset Accounting, Controlling (CO), and SAP Fiori Launchpad.
+     - **SAP S/4HANA Materials Management (MM)** (2 Months): Procure-to-Pay (P2P), Material Master, Purchasing, Inventory Management (MIGO), Logistics Invoice Verification (MIRO), and Automatic Account Determination (OBYC).
+     - **SAP S/4HANA Integrated ERP (Finance & MM)** (Dual Functional Specialization | 4 Months): Comprehensive cross-functional dual specialization with live SAP server sandbox access.
    - **Data & AI Tracks**:
      - **Data Analytics**, **Data Science**, **Artificial Intelligence (AI)**, **Machine Learning (ML)**, **Deep Learning**
    - **Cloud & Infrastructure Tracks**:
@@ -35,19 +35,19 @@ Built with **HTML5, Tailwind CSS, Modern JavaScript, and Google Fonts**, it requ
    - **Corporate & Team Upskilling**: Custom cohorts for engineering teams.
 
 5. **Free Add-On Benefits You'll Gain (ACTE Signature Pack)**:
-   - Free Soft Skills & Corporate Communication Grooming (Worth ₹9,999 — FREE)
-   - Unlimited 1-on-1 Mock Technical Interviews (Worth ₹14,999 — FREE)
-   - Lifetime Access to LMS 1080p Recordings (Worth ₹12,000 — FREE)
-   - Professional Resume & LinkedIn Optimization (Worth ₹7,500 — FREE)
-   - 10+ Production GitHub Repositories (Worth ₹10,000 — FREE)
-   - Dedicated WhatsApp Doubt Clearing Group (Worth ₹8,000 — FREE)
+   - Free Soft Skills & Corporate Communication Grooming
+   - Unlimited 1-on-1 Mock Technical Interviews
+   - Lifetime Access to LMS 1080p Recordings
+   - Professional Resume & LinkedIn Optimization
+   - 10+ Production GitHub Repositories
+   - Dedicated WhatsApp Doubt Clearing Group
 
 6. **Sticky Bottom Conversion Bar**:
    - Non-intrusive floating bar with live batch countdown alert, "Book Free Live Demo" CTA, and instant WhatsApp chat.
 
-7. **Transparent Pricing & Milestone Payments**:
-   - Course fees displayed clearly in Indian Rupees (**₹ INR**) with upfront transparent pricing.
-   - Flexible 2-Part Milestone Payment Option (50% upon enrollment, 50% after Month 1) via UPI, Net Banking, or Cards.
+7. **Flexible Admissions & Milestone Support**:
+   - Transparent batch scheduling and curriculum pathways with flexible learning options.
+   - Dedicated Placement Support with 350+ corporate hiring partners.
    - 100% 7-Day Money-Back Guarantee.
 
 8. **100% Live Virtual Learning (Zero Physical Campus Dependencies)**:
@@ -67,7 +67,7 @@ Built with **HTML5, Tailwind CSS, Modern JavaScript, and Google Fonts**, it requ
 india-tech-institute/
 ├── index.html          # Main landing page (Hero, 17 Skills Matrix, Programs, Virtual Ecosystem, FAQs, Form)
 ├── courses.html        # Comprehensive course catalog with curriculum comparison table
-├── admissions.html     # Step-by-step admissions roadmap, batch selection, and fee schedules in INR
+├── admissions.html     # Step-by-step admissions roadmap, batch selection, and curriculum schedules
 ├── css/
 │   └── custom.css      # Custom animations, glow pulses, marquees, and typography
 ├── js/
@@ -108,7 +108,7 @@ Then visit `http://localhost:8080`.
 
 ### 3. Edit or Add Courses
 - Open `js/courses-data.js`.
-- Modify course titles, fees (`discountedFee`, `originalFee`), modules, or add new course objects to the `COURSES_DATA` array. The UI will re-render automatically!
+- Modify course titles, modules, or add new course objects to the `COURSES_DATA` array. The UI will re-render automatically!
 
 ---
 

@@ -151,9 +151,9 @@ const COURSES_DATA = [
     reviewsCount: 1640,
     shortDesc: "Master Advanced Excel, SQL / Databases, Power BI, Tableau, Python for analytics, and Git & GitHub with hands-on corporate case studies.",
     overview: "Designed to transform graduates and working professionals into job-ready Business Analysts and Data Analysts in India. You will learn to extract raw data using SQL, analyze it using Advanced Excel and Python, and create executive-ready dashboards in Power BI and Tableau.",
-    originalFee: 48000,
-    discountedFee: 32000,
-    milestonePayment: "₹16,000 x 2 Milestones (+ 18% GST)",
+    admissionStatus: "Admissions Open",
+    batchSchedule: "Weekday & Weekend Batches",
+    placementSupport: "Dedicated Placement Drives",
     nextBatch: "Starts This Monday & Saturday",
     hirers: ["Deloitte", "EY", "KPMG", "PwC", "Accenture", "Swiggy", "Mu Sigma"],
     tools: [
@@ -236,9 +236,9 @@ const COURSES_DATA = [
     reviewsCount: 1980,
     shortDesc: "Master Python Programming, SQL / Databases, Jupyter Notebook, VS Code, Scikit-learn, statistical modeling, and production Machine Learning pipelines.",
     overview: "The quintessential curriculum for aspiring Data Scientists and ML Engineers in India. Master the mathematics, statistics, data pipelines, and machine learning algorithms that power modern recommendation engines, fraud detection systems, and predictive models.",
-    originalFee: 68000,
-    discountedFee: 46000,
-    milestonePayment: "₹23,000 x 2 Milestones (+ 18% GST)",
+    admissionStatus: "Admissions Open",
+    batchSchedule: "Weekday & Weekend Batches",
+    placementSupport: "Dedicated Placement Drives",
     nextBatch: "Starts Next Tuesday & Weekend",
     hirers: ["Amazon", "Flipkart", "Tiger Analytics", "Fractal", "Infosys", "PhonePe"],
     tools: [
@@ -327,9 +327,9 @@ const COURSES_DATA = [
     reviewsCount: 1420,
     shortDesc: "From Artificial Intelligence (AI) fundamentals to Deep Learning, Neural Networks, Computer Vision, NLP, and AWS cloud model training.",
     overview: "Step into the cutting edge of modern AI. Learn the inner workings of deep neural networks, computer vision (CNNs), natural language processing (RNNs, Transformers), and how to train and deploy deep learning models on cloud compute instances using AWS and Jupyter Notebook.",
-    originalFee: 78000,
-    discountedFee: 52000,
-    milestonePayment: "₹26,000 x 2 Milestones (+ 18% GST)",
+    admissionStatus: "Admissions Open",
+    batchSchedule: "Weekday & Weekend Batches",
+    placementSupport: "Dedicated Placement Drives",
     nextBatch: "Starts Saturday (Weekend Batch)",
     hirers: ["Google India", "Microsoft", "Amazon", "Wipro AI", "TCS Research", "NVIDIA Partners"],
     tools: [
@@ -418,9 +418,9 @@ const COURSES_DATA = [
     reviewsCount: 1350,
     shortDesc: "Master Cloud Computing, DevOps, AWS services, Linux Basics, Docker & Kubernetes (Basics), Git & GitHub, and CI/CD pipelines in VS Code.",
     overview: "Every tech firm in India requires engineers who can deploy, orchestrate, and maintain resilient cloud infrastructure. This bootcamp takes you from Linux terminal basics to full AWS cloud architecture, containerization with Docker, and foundational Kubernetes cluster deployments.",
-    originalFee: 66000,
-    discountedFee: 46000,
-    milestonePayment: "₹23,000 x 2 Milestones (+ 18% GST)",
+    admissionStatus: "Admissions Open",
+    batchSchedule: "Weekday & Weekend Batches",
+    placementSupport: "Dedicated Placement Drives",
     nextBatch: "Starts Next Wednesday",
     hirers: ["Amazon Web Services", "TCS Cloud", "Wipro", "Capgemini", "LTIMindtree", "Cognizant"],
     tools: [
@@ -511,9 +511,9 @@ const COURSES_DATA = [
     reviewsCount: 890,
     shortDesc: "The core foundational programming course. Master Python Programming, SQL / Databases, Git & GitHub, Jupyter Notebook, and VS Code from scratch.",
     overview: "The essential starting point for any tech career. Whether your dream is Data Science, AI, Web Development, or Cloud Engineering, this course ensures your coding logic, object-oriented concepts, and relational database mastery are rock-solid.",
-    originalFee: 32000,
-    discountedFee: 22000,
-    milestonePayment: "₹11,000 x 2 Milestones (+ 18% GST)",
+    admissionStatus: "Admissions Open",
+    batchSchedule: "Weekday & Weekend Batches",
+    placementSupport: "Dedicated Placement Drives",
     nextBatch: "Starts Upcoming Monday",
     hirers: ["TCS", "Cognizant", "Wipro", "Tech Mahindra", "Mindtree", "Capgemini"],
     tools: [
@@ -581,9 +581,9 @@ const COURSES_DATA = [
     reviewsCount: 820,
     shortDesc: "The complete, all-inclusive career track covering ALL 17 in-demand skills from Advanced Excel & SQL to Python, ML, Deep Learning, AWS, Docker, Kubernetes & DevOps.",
     overview: "Our premier comprehensive program designed for students and working professionals aiming for top-tier tech roles. Covers the entire pipeline: from data analytics and business intelligence, to machine learning, artificial intelligence, deep learning, and cloud infrastructure on AWS with DevOps automation.",
-    originalFee: 95000,
-    discountedFee: 64000,
-    milestonePayment: "₹32,000 x 2 Milestones (+ 18% GST)",
+    admissionStatus: "Admissions Open",
+    batchSchedule: "Weekday & Weekend Batches",
+    placementSupport: "Dedicated Placement Drives",
     nextBatch: "Starts 20th Oct 2026",
     hirers: ["Amazon", "Microsoft", "Google", "Flipkart", "Razorpay", "Swiggy", "Deloitte"],
     tools: [
@@ -678,9 +678,9 @@ const COURSES_DATA = [
     reviewsCount: 1180,
     shortDesc: "Master SAP S/4HANA Financial Accounting (FI), Universal Journal (ACDOCA), General Ledger, AP/AR, Asset Accounting, Controlling (CO), and SAP Fiori Launchpad in 2 intensive months.",
     overview: "Fast-track 2-month live virtual program designed for Commerce graduates, CAs, ICWAs, MBAs, and ERP professionals in India. Gain practical hands-on mastery over the SAP S/4HANA Finance suite: enterprise structure configuration, real-time General Ledger, Accounts Payable, Accounts Receivable, New Asset Accounting, and Cost Center Controlling with dedicated SAP GUI and Fiori server access.",
-    originalFee: 45000,
-    discountedFee: 30000,
-    milestonePayment: "₹15,000 x 2 Milestones (+ 18% GST)",
+    admissionStatus: "Admissions Open",
+    batchSchedule: "Weekday & Weekend Batches",
+    placementSupport: "Dedicated Placement Drives",
     nextBatch: "Starts This Saturday & Wednesday",
     hirers: ["Accenture", "TCS SAP Practice", "Deloitte India", "Wipro", "IBM", "Infosys", "Capgemini"],
     tools: [
@@ -776,9 +776,9 @@ const COURSES_DATA = [
     reviewsCount: 1050,
     shortDesc: "Master SAP S/4HANA Materials Management (MM), Sourcing & Procurement, Procure-to-Pay (P2P), Material Master, Inventory Management, MIRO, and FI integration in 2 intensive months.",
     overview: "Fast-track 2-month live virtual bootcamp designed for supply chain, logistics, engineering, and commerce aspirants in India. Master the complete Procure-to-Pay (P2P) lifecycle in SAP S/4HANA: configure purchasing organizations, manage Material Masters, vendor Business Partners, RFQ, Purchase Orders, Goods Receipt (MIGO), Logistics Invoice Verification (MIRO), and automatic account determination with Finance (FI).",
-    originalFee: 45000,
-    discountedFee: 30000,
-    milestonePayment: "₹15,000 x 2 Milestones (+ 18% GST)",
+    admissionStatus: "Admissions Open",
+    batchSchedule: "Weekday & Weekend Batches",
+    placementSupport: "Dedicated Placement Drives",
     nextBatch: "Starts Upcoming Monday & Weekend",
     hirers: ["L&T Infotech", "Tata Steel", "TCS", "Accenture", "Cognizant", "Reliance Industries", "Infosys"],
     tools: [
@@ -874,9 +874,9 @@ const COURSES_DATA = [
     reviewsCount: 890,
     shortDesc: "The comprehensive 4-month dual functional mastertrack combining SAP S/4HANA Finance (FI/CO) and Materials Management (MM) for complete enterprise ERP mastery.",
     overview: "Cross-functional SAP functional consultants command top consulting roles in enterprise IT firms (Deloitte, PwC, Accenture, TCS). In this comprehensive 4-month track, master both SAP S/4HANA Finance and SAP Materials Management, giving you end-to-end mastery over procurement, inventory, supplier settlements, and financial balance sheets.",
-    originalFee: 85000,
-    discountedFee: 60000,
-    milestonePayment: "₹30,000 x 2 Milestones (+ 18% GST)",
+    admissionStatus: "Admissions Open",
+    batchSchedule: "Weekday & Weekend Batches",
+    placementSupport: "Dedicated Placement Drives",
     nextBatch: "Starts This Monday & Saturday",
     hirers: ["Deloitte", "PwC", "Accenture", "EY", "TCS", "Wipro", "Capgemini", "LTIMindtree"],
     tools: [
@@ -999,38 +999,38 @@ const VIRTUAL_LEARNING_PILLARS = [
 const FREE_ADDON_BENEFITS = [
   {
     title: "Free Soft Skills & Aptitude Grooming",
-    value: "Worth ₹9,999",
-    tag: "100% FREE",
+    value: "Included Free",
+    tag: "100% INCLUDED",
     desc: "Corporate communication, group discussions, email etiquette, and behavioral interview coaching to clear HR rounds with confidence."
   },
   {
     title: "Unlimited Mock Technical Interviews",
-    value: "Worth ₹14,999",
-    tag: "100% FREE",
+    value: "Included Free",
+    tag: "100% INCLUDED",
     desc: "Simulated 1-on-1 technical coding rounds conducted by Principal Engineers and Staff Tech Leads from Tier-1 MNCs."
   },
   {
     title: "Lifetime LMS Access with 1080p Recordings",
-    value: "Worth ₹12,000",
-    tag: "100% FREE",
+    value: "Included Free",
+    tag: "100% INCLUDED",
     desc: "Permanent unlimited access to high-definition video archives, lecture decks, code scripts, and future batch refresher access."
   },
   {
     title: "ATS Resume & LinkedIn Optimization",
-    value: "Worth ₹7,500",
-    tag: "100% FREE",
+    value: "Included Free",
+    tag: "100% INCLUDED",
     desc: "Expert tech recruiters re-engineer your CV with high-impact keyword metrics that pass ATS scans and attract recruiters on LinkedIn."
   },
   {
     title: "10+ GitHub Capstone Portfolios",
-    value: "Worth ₹10,000",
-    tag: "100% FREE",
+    value: "Included Free",
+    tag: "100% INCLUDED",
     desc: "Build verified production-grade repositories deployed to AWS and cloud servers with clean README documentation."
   },
   {
     title: "Dedicated WhatsApp Doubt Community",
-    value: "Worth ₹8,000",
-    tag: "100% FREE",
+    value: "Included Free",
+    tag: "100% INCLUDED",
     desc: "Direct 24/7 access to mentor-monitored WhatsApp doubt rooms for instant code debugging and homework guidance."
   }
 ];
@@ -1122,8 +1122,8 @@ const FAQS = [
     a: "Our dedicated Placement Assistant conducts extensive resume re-engineering, GitHub project profiling, and multi-tier mock technical interviews in Python, SQL, ML, and Cloud topics. We provide continuous interview drives with our 350+ corporate hiring partners until you secure your offer letter."
   },
   {
-    q: "Can I pay the course fee in flexible installments?",
-    a: "Yes! You can choose our convenient 2-part milestone payment schedule (50% upon admission and 50% after the first month) or complete a standard one-time enrollment fee. Additional 18% GST is applicable as per Government of India regulations. We accept UPI, Net Banking, and all major cards with zero hidden charges."
+    q: "Are flexible payment options and milestones available?",
+    a: "Yes! You can choose our convenient 2-part milestone payment schedule or inquire about scholarship opportunities directly with our academic counselors during your consultation."
   },
   {
     q: "Will I get practical access to tools like AWS, Docker, Power BI, and Jupyter Notebooks?",
