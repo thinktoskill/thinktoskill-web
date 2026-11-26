@@ -144,15 +144,28 @@ document.addEventListener('DOMContentLoaded', () => {
   setupWhatsAppTriggers();
   initRegistrationPopup();
   updateCandidateAccessUI();
+  initBackToTop();
 
-  // Handle URL parameters for direct brochure or skill deep-linking
+  // Handle URL parameters for direct brochure, skill deep-linking, or scroll position
   const urlParams = new URLSearchParams(window.location.search);
   const autoBrochure = urlParams.get('brochure');
   const autoSkill = urlParams.get('skill');
+  const autoScroll = urlParams.get('scroll');
+  const showTop = urlParams.get('show_top');
   if (autoBrochure) {
     setTimeout(() => openBrochureModal(autoBrochure), 300);
   } else if (autoSkill) {
     setTimeout(() => filterBySkill(autoSkill), 300);
+  } else if (autoScroll) {
+    const sPos = parseInt(autoScroll, 10);
+    window.scrollTo(0, sPos);
+    document.documentElement.scrollTop = sPos;
+    document.body.scrollTop = sPos;
+    if (typeof updateBackToTopVisibility === 'function') updateBackToTopVisibility();
+  }
+  if (showTop) {
+    const btn = document.getElementById('back-to-top-btn');
+    if (btn) btn.classList.add('visible');
   }
 });
 
@@ -2346,6 +2359,66 @@ document.addEventListener('keydown', (e) => {
     if (typeof closeQuickUnlockModal === 'function') closeQuickUnlockModal();
   }
 });
+
+// 17. Floating "Back to Top" Scroll Button
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+function initBackToTop() {
+  let btn = document.getElementById('back-to-top-btn');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'back-to-top-btn';
+    btn.className = 'back-to-top-btn';
+    btn.setAttribute('aria-label', 'Back to Top');
+    btn.title = 'Back to Top';
+    btn.innerHTML = `
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+      </svg>
+      <span class="sr-only">Back to Top</span>
+    `;
+    document.body.appendChild(btn);
+  } else {
+    btn.classList.add('back-to-top-btn');
+  }
+
+  btn.onclick = (e) => {
+    e.preventDefault();
+    scrollToTop();
+  };
+
+  const updateVisibility = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('show_top') === '1') {
+      btn.classList.add('visible', 'opacity-100', 'pointer-events-auto', 'translate-y-0');
+      btn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+      return;
+    }
+    const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (scrollPos > 280) {
+      btn.classList.add('visible', 'opacity-100', 'pointer-events-auto', 'translate-y-0');
+      btn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+    } else {
+      btn.classList.remove('visible', 'opacity-100', 'pointer-events-auto', 'translate-y-0');
+      btn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+    }
+  };
+
+  window.addEventListener('scroll', updateVisibility, { passive: true });
+  window.addEventListener('resize', updateVisibility, { passive: true });
+  window.updateBackToTopVisibility = updateVisibility;
+
+  updateVisibility();
+}
+
+window.scrollToTop = scrollToTop;
+window.initBackToTop = initBackToTop;
+
 
 
 
