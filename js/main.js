@@ -144,6 +144,16 @@ document.addEventListener('DOMContentLoaded', () => {
   setupWhatsAppTriggers();
   initRegistrationPopup();
   updateCandidateAccessUI();
+
+  // Handle URL parameters for direct brochure or skill deep-linking
+  const urlParams = new URLSearchParams(window.location.search);
+  const autoBrochure = urlParams.get('brochure');
+  const autoSkill = urlParams.get('skill');
+  if (autoBrochure) {
+    setTimeout(() => openBrochureModal(autoBrochure), 300);
+  } else if (autoSkill) {
+    setTimeout(() => filterBySkill(autoSkill), 300);
+  }
 });
 
 // 1. Render Course Cards
@@ -247,18 +257,22 @@ function renderCourseCards(coursesToRender = COURSES_DATA) {
           </div>
         </div>
 
-        <!-- Action Buttons (ACTE High-Converting Dual CTAs) -->
+        <!-- Action Buttons (High-Converting Dual CTAs with Instant Brochure Access) -->
         <div class="p-4 bg-slate-50/90 border-t border-slate-100 flex flex-col gap-2">
-          <div class="flex items-center gap-2">
-            <button onclick="handleSyllabusButtonClick('${course.id}')" class="flex-1 py-2.5 px-3 bg-white hover:bg-slate-100 text-slate-800 font-extrabold text-xs rounded-xl border border-slate-300 transition text-center shadow-sm flex items-center justify-center gap-1.5">
-              <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-              <span>Download Syllabus</span>
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="openBrochureModal('${course.id}')" class="py-2.5 px-2 bg-blue-50 hover:bg-blue-100 text-blue-700 font-extrabold text-xs rounded-xl border border-blue-200 transition text-center shadow-sm flex items-center justify-center gap-1.5" title="View official high-resolution brochure flyer">
+              <svg class="w-3.5 h-3.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+              <span>View Brochure</span>
             </button>
-            <button onclick="goToAdmissions('${course.id}')" class="flex-1 py-2.5 px-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl transition text-center shadow-md shadow-blue-500/20 flex items-center justify-center gap-1">
-              <span>Enroll / Apply Now</span>
+            <button onclick="handleSyllabusButtonClick('${course.id}')" class="py-2.5 px-2 bg-white hover:bg-slate-100 text-slate-800 font-extrabold text-xs rounded-xl border border-slate-300 transition text-center shadow-sm flex items-center justify-center gap-1.5" title="Download comprehensive syllabus curriculum">
+              <svg class="w-3.5 h-3.5 text-slate-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              <span>Syllabus PDF</span>
             </button>
           </div>
-          <button onclick="openCourseDetails('${course.id}')" class="w-full text-center text-[11px] font-bold text-blue-600 hover:text-blue-800 hover:underline pt-1">
+          <button onclick="goToAdmissions('${course.id}')" class="w-full py-2.5 px-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl transition text-center shadow-md shadow-blue-500/20 flex items-center justify-center gap-1">
+            <span>Enroll / Apply Now</span>
+          </button>
+          <button onclick="openCourseDetails('${course.id}')" class="w-full text-center text-[11px] font-bold text-blue-600 hover:text-blue-800 hover:underline pt-0.5">
             View Complete Week-by-Week Curriculum & Projects →
           </button>
         </div>
@@ -465,7 +479,29 @@ function resetCourseFilters() {
   renderCourseCards(COURSES_DATA);
 }
 
-// 2b. Skills Matrix (17 In-Demand Skills)
+// 2b. Skills Matrix (17 In-Demand Skills) & Direct Brochure Mapping
+const SKILL_TO_COURSE_MAP = {
+  "Data Analytics": "data-analytics-bi",
+  "Data Science": "data-science-ml",
+  "Artificial Intelligence (AI)": "ai-deep-learning",
+  "Machine Learning (ML)": "data-science-ml",
+  "Deep Learning": "ai-deep-learning",
+  "Cloud Computing": "cloud-devops-aws",
+  "DevOps": "cloud-devops-aws",
+  "Python Programming": "python-sql-foundations",
+  "SQL / Databases": "python-sql-foundations",
+  "Excel (Advanced)": "data-analytics-bi",
+  "Power BI / Tableau": "data-analytics-bi",
+  "Git & GitHub": "cloud-devops-aws",
+  "Linux Basics": "cloud-devops-aws",
+  "Docker & Kubernetes (Basics)": "cloud-devops-aws",
+  "AWS": "cloud-devops-aws",
+  "Jupyter Notebook": "data-science-ml",
+  "VS Code": "python-sql-foundations",
+  "SAP S/4HANA Finance": "sap-s4-hana-finance",
+  "SAP S/4HANA Material Management (MM)": "sap-s4-hana-mm"
+};
+
 function initSkillsMatrix() {
   const container = document.getElementById('skills-matrix-grid');
   if (!container || typeof SKILLS_LIST === 'undefined') return;
@@ -482,8 +518,13 @@ function initSkillsMatrix() {
         <p class="text-xs text-slate-600 leading-relaxed">${skill.desc}</p>
       </div>
       <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-        <span class="text-xs font-bold text-blue-600 group-hover:text-blue-700 flex items-center gap-1">
-          Explore Related Courses <span class="group-hover:translate-x-1 transition-transform">→</span>
+        <span class="text-xs font-bold text-blue-600 group-hover:text-blue-700 flex items-center gap-1.5">
+          <span>Explore Related Courses</span>
+          <span class="group-hover:translate-x-1 transition-transform">→</span>
+        </span>
+        <span class="text-[10px] font-extrabold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md flex items-center gap-1 group-hover:bg-blue-50 group-hover:text-blue-700 transition-colors">
+          <svg class="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+          Brochure
         </span>
       </div>
     </div>
@@ -518,7 +559,18 @@ function filterBySkill(skillName) {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  showToast(`Showing courses covering "${skillName}"`, 'info');
+  // 5. Instantly show official brochure for the related course
+  const targetCourseId = SKILL_TO_COURSE_MAP[skillName] || (COURSES_DATA.find(c => 
+    c.title.toLowerCase().includes(skillName.toLowerCase()) || 
+    c.tools.some(t => t.toLowerCase().includes(skillName.toLowerCase())) ||
+    (c.skillsCovered && c.skillsCovered.some(s => s.toLowerCase().includes(skillName.toLowerCase())))
+  ) || COURSES_DATA[0]).id;
+
+  setTimeout(() => {
+    openBrochureModal(targetCourseId);
+  }, 350);
+
+  showToast(`Showing courses and official brochure for "${skillName}"`, 'info');
 }
 
 // 3. Course Details & Syllabus Modal
@@ -1247,6 +1299,112 @@ const COURSE_BROCHURE_MAP = {
   'sap-s4-hana-mm': 'assets/brochures/brochure-sap-mm.png',
   'sap-s4-hana-integrated': 'assets/brochures/brochure-sap-integrated.png'
 };
+
+// High-Definition Course Brochure Lightbox Viewer
+let currentLightboxImg = '';
+let currentLightboxTitle = '';
+let currentLightboxCourseId = '';
+let currentLightboxDownload = '';
+
+function ensureLightboxModal() {
+  let lightbox = document.getElementById('image-lightbox');
+  if (!lightbox) {
+    lightbox = document.createElement('div');
+    lightbox.id = 'image-lightbox';
+    lightbox.className = 'fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-4';
+    lightbox.innerHTML = `
+      <div class="relative max-w-4xl max-h-[94vh] flex flex-col items-center w-full">
+        <button onclick="closeLightbox()" class="absolute top-2 right-2 sm:-top-12 sm:right-0 bg-slate-900/80 sm:bg-transparent rounded-full px-3 py-1.5 text-white hover:text-amber-400 text-sm sm:text-2xl font-bold transition z-20 backdrop-blur-sm border border-slate-700/60 sm:border-0 shadow-lg flex items-center gap-1">
+          <span>&times;</span>
+          <span class="text-xs sm:text-lg">Close</span>
+        </button>
+        <div class="w-full flex items-center justify-between text-white text-xs sm:text-sm font-bold mb-2 px-1">
+          <span id="lightbox-caption" class="text-white truncate max-w-[70%]">Official Course Brochure</span>
+          <span class="text-blue-400 bg-blue-950/80 px-2 py-0.5 rounded text-[10px] font-extrabold uppercase border border-blue-500/30">Official Brochure</span>
+        </div>
+        <img id="lightbox-img" src="" alt="Full Resolution Brochure Flyer" class="max-h-[68vh] sm:max-h-[76vh] w-auto max-w-full rounded-2xl shadow-2xl object-contain border border-slate-700 bg-white" />
+        <div class="mt-3.5 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 w-full">
+          <button type="button" id="lightbox-download" onclick="downloadLightboxBrochure()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition shadow flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            <span>Download High-Resolution Brochure</span>
+          </button>
+          <button id="lightbox-share" onclick="shareLightboxBrochure()" class="px-5 py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold rounded-xl transition shadow flex items-center justify-center gap-2">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.353.101.173.45 1.05 1.341 1.574.654.384 1.026.435 1.189.508.163.072.26-.015.347-.116.087-.101.376-.434.477-.579.101-.145.202-.116.347-.058.145.058.924.434 1.083.508.159.072.26.116.303.173.044.058.044.405-.1.81z"/></svg>
+            <span>Share to WhatsApp</span>
+          </button>
+          <button type="button" id="lightbox-view-course" onclick="viewCourseFromLightbox()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition border border-slate-700 flex items-center justify-center gap-1.5">
+            <span>View Course Details &rarr;</span>
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(lightbox);
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target.id === 'image-lightbox') {
+        closeLightbox();
+      }
+    });
+  }
+  return lightbox;
+}
+
+function openLightbox(imgSrc, title, courseId = null) {
+  ensureLightboxModal();
+  const lightbox = document.getElementById('image-lightbox');
+  const img = document.getElementById('lightbox-img');
+  const caption = document.getElementById('lightbox-caption');
+
+  currentLightboxImg = imgSrc;
+  currentLightboxTitle = title;
+  currentLightboxCourseId = courseId;
+  currentLightboxDownload = `ThinkToSkill_${title.replace(/[^a-zA-Z0-9]/g, '_')}_Brochure.png`;
+
+  if (img) img.src = imgSrc;
+  if (caption) caption.textContent = `${title} — Official Brochure`;
+
+  if (lightbox) {
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+  }
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById('image-lightbox');
+  if (lightbox) {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+  }
+  document.body.style.overflow = '';
+}
+
+function downloadLightboxBrochure() {
+  if (currentLightboxImg) {
+    downloadBrochureWithAuth(currentLightboxImg, currentLightboxDownload, currentLightboxTitle, currentLightboxCourseId);
+  }
+}
+
+function shareLightboxBrochure() {
+  if (currentLightboxTitle) {
+    shareBrochureWithAuth(currentLightboxTitle, currentLightboxCourseId, currentLightboxImg);
+  }
+}
+
+function viewCourseFromLightbox() {
+  const targetId = currentLightboxCourseId;
+  closeLightbox();
+  if (targetId) {
+    openCourseDetails(targetId);
+  }
+}
+
+function openBrochureModal(courseId) {
+  const course = (typeof COURSES_DATA !== 'undefined') ? (COURSES_DATA.find(c => c.id === courseId) || COURSES_DATA[0]) : null;
+  if (!course) return;
+  const brochureImg = COURSE_BROCHURE_MAP[course.id] || 'assets/brochures/brochure-data-analytics.png';
+  openLightbox(brochureImg, course.title, course.id);
+}
 
 function openSyllabusModal(courseId) {
   const course = COURSES_DATA.find(c => c.id === courseId) || COURSES_DATA[0];
@@ -2177,6 +2335,17 @@ function updateCandidateAccessUI() {
     }
   });
 }
+
+// Global Escape key handler for all modals including brochure lightbox
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (typeof closeLightbox === 'function') closeLightbox();
+    if (typeof closeModal === 'function') closeModal();
+    if (typeof closeSyllabusModal === 'function') closeSyllabusModal();
+    if (typeof closeRegistrationModal === 'function') closeRegistrationModal();
+    if (typeof closeQuickUnlockModal === 'function') closeQuickUnlockModal();
+  }
+});
 
 
 
